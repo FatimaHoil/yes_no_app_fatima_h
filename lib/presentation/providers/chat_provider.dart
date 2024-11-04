@@ -1,4 +1,4 @@
-import 'dart:ffi';
+
 
 import 'package:flutter/material.dart';
 import 'package:yes_no_app_fatima_h/domain/entities/message.dart';
@@ -26,7 +26,7 @@ class ChatProvider extends ChangeNotifier{
 
     //Mover el scroll al ultimo mensaje 
 
-    Future<Void> moveScrollBottom() async{
+    Future<void> moveScrollBottom() async{
       // un pequeño atraso en la animacion para garantizar que siempre 
       //se vera aun cuando se envie el mensaje 
       await Future.delayed(const Duration(seconds: 1));

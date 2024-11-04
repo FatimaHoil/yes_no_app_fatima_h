@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:yes_no_app_fatima_h/config/theme/app_theme.dart';
+import 'package:yes_no_app_fatima_h/presentation/screens/chat/chat_screen.dart';
 
 void main() => runApp(const MyApp());
 
@@ -10,16 +12,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Yes No App',
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Material Appp Bar'),
-        ),
-        body:  Center(
-          child: FilledButton.tonal(
-            onPressed: (){},
-             child:const Text('click me')),
-        ),
-      ),
+      //tema:
+      theme: AppTheme(selecTtedColor:5 ).theme(),
+      home: const ChatScreen()
+      
+     
     );
   }
 }
