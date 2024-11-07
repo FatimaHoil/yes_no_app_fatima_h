@@ -1,30 +1,25 @@
-
 import 'package:flutter/material.dart';
 
-const Color _customColor = Color(0xFF5C11D4);
+const Color customColor = Color(0xFF0000FF);
 
-const List<Color> _colortheme = [
-  _customColor,
-  Colors.red,
-  Colors.yellow,
+const List<Color> colorThemes = [
+  customColor,
+  Colors.green,
   Colors.teal,
-  Colors.greenAccent,
-  Colors.cyan,
-  Colors.orangeAccent,
+  Colors.yellow,
+  Colors.orange,
+  Colors.pink,
+
 
 ];
 
 class AppTheme {
-  final int selecTtedColor;
 
-  AppTheme({this.selecTtedColor = 0}) : 
-    assert(selecTtedColor >=0 && selecTtedColor <= _colortheme.length - 1,
-    'colorss must be between 0 and ${_colortheme.length}' );
+  ThemeData theme(){ 
+    return ThemeData(useMaterial3: true,
+    colorSchemeSeed: colorThemes[1],
+    brightness: Brightness.dark
+    );
+  }
 
-
-ThemeData theme() {
-  return ThemeData(useMaterial3: true, colorSchemeSeed: _colortheme[selecTtedColor]);
-    
-}
-  
 }

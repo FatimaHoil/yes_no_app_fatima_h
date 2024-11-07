@@ -1,41 +1,56 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:yes_no_app_fatima_h/config/theme/helpers/yes_no_answer.dart';
 import 'package:yes_no_app_fatima_h/domain/entities/message.dart';
 
+
 class ChatProvider extends ChangeNotifier{
+  
+  
+  final ScrollController chatScrollcontroler = ScrollController();
+  final GetYesNoanswer getYesNoanswer = GetYesNoanswer();
+  //instanci de la clase GetYesNoAnver
 
-  List<Message> messageList = [
-    Message(text: 'hola ader ', fromWho: FromWho.me),
-    Message(text: 'saludos', fromWho: FromWho.me),
+  List<Messages> message = [
+    Messages(text: 'Buen dia', fromWho: FromWho.mine),
+    Messages(text: 'hola', fromWho: FromWho.mine)
   ];
-  //controlador para manejar la posicion del scroll
-  final ScrollController chatScrollControler = ScrollController();
+  
 
-  //enviar un mensaje 
   Future<void> sendMessage(String text) async{
-    //El mensaje Siempre va a ser "me"xq yo lo envio
-    final newMessage = Message(text: text, fromWho: FromWho.me);
-    //agrega un nuevo elemento a la lista "messageList"
-    messageList.add(newMessage);
-    //notifica si algo de provider cabio para que se guarde en el estado
+    //evita enviar mensajes vacios o solo espacios 
+    if (text.trim().isEmpty) return;
+    
+    final newMessage = Messages(text: text, fromWho: FromWho.mine);
+    message.add(newMessage);
+    print('Cantidad de mensajes: ${message.length}'); // Imprime la cantidad de mensajes
+
+    if (text.endsWith('?')){ 
+       seojunReply();
+     }
     notifyListeners();
-    //mueve el scroll
-    moveScrollBottom();
+    moveScrollToBottom();
+
+   }
+
+
+  Future<void> seojunReply() async { 
+    final seojunMessage = await getYesNoanswer.getAnswer();
+    message.add(seojunMessage);
+    notifyListeners();
+    moveScrollToBottom();
+
+   }
+   
+
+  void moveScrollToBottom(){ 
+
+    chatScrollcontroler.animateTo(
+      //extender el scroll lo maximo que se mueva
+    chatScrollcontroler.position.maxScrollExtent,
+    duration: const Duration(seconds: 1), 
+    curve: Curves.easeOut);
+
   }
 
-    //Mover el scroll al ultimo mensaje 
 
-    Future<void> moveScrollBottom() async{
-      // un pequeño atraso en la animacion para garantizar que siempre 
-      //se vera aun cuando se envie el mensaje 
-      await Future.delayed(const Duration(seconds: 1));
-      chatScrollControler.animateTo(
-              //offset: posicion de la animacion 
-      //maxScrollExent determina a lo maximo que el scroll puede dar 
-      chatScrollControler.position.maxScrollExtent,
-        duration: const Duration(microseconds: 300),
-         curve: Curves.easeOut);
-    }
-  }
-
+}
