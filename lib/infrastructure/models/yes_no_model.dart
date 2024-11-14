@@ -1,4 +1,6 @@
+import 'package:intl/intl.dart';
 import 'package:yes_no_app_fatima_h/domain/entities/message.dart';
+
 
 class YesNoModel {
     final String answer;
@@ -23,8 +25,13 @@ class YesNoModel {
         "image": image,
     };
 
-    Messages toMessageEntitie() => Messages(
-      text: answer == 'yes'? 'Si' : 'No', 
-      fromWho: FromWho.him,
-      imageUrl: image);
+     Messages toMessageEntity() => Messages(
+      text: answer == 'yes'
+          ? 'Si'
+          : answer == 'no'
+              ? 'No'
+              : 'Quizás',
+      fromWho: FromWho.Seojun,
+      imageUrl: image,
+      time: DateFormat('hh:mm a').format(DateTime.now()));
 }

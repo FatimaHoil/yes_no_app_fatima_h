@@ -1,13 +1,23 @@
-enum FromWho { mine, him,}
+enum FromWho { hime, Seojun }
 
 class Messages {
   final String text;
   final String? imageUrl;
   final FromWho fromWho;
+  final String time;
 
   Messages({ 
     required this.text,
     this.imageUrl,
-    required this.fromWho
-  });
+    required this.fromWho,
+    required this.time,});
+  
+  Messages copyWith(
+      {String? text, String? imageUrl, FromWho? formWho, String? time}) {
+    return Messages(
+      text: text ?? this.text,
+      imageUrl: imageUrl ?? this.imageUrl,
+      fromWho: formWho ?? this.fromWho,
+      time: time ?? this.time,);
+      }
 }

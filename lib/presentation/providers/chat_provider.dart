@@ -1,56 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:yes_no_app_fatima_h/config/theme/helpers/yes_no_answer.dart';
 import 'package:yes_no_app_fatima_h/domain/entities/message.dart';
 
 
-class ChatProvider extends ChangeNotifier{
+class ChatProvider extends ChangeNotifier {
   
-  
-  final ScrollController chatScrollcontroler = ScrollController();
+  final ScrollController chatScrollController = ScrollController();
   final GetYesNoanswer getYesNoanswer = GetYesNoanswer();
-  //instanci de la clase GetYesNoAnver
 
-  List<Messages> message = [
-    Messages(text: 'Buen dia', fromWho: FromWho.mine),
-    Messages(text: 'hola', fromWho: FromWho.mine)
+  List<Messages> messages = [
+    Messages(text: 'Buen día', fromWho: FromWho.hime, 
+    time: DateFormat('hh:mm a').format(DateTime.now())),
+    Messages(text: 'Hola', fromWho: FromWho.hime,time: DateFormat('hh:mm a').format(DateTime.now()))
   ];
-  
 
-  Future<void> sendMessage(String text) async{
-    //evita enviar mensajes vacios o solo espacios 
-    if (text.trim().isEmpty) return;
-    
-    final newMessage = Messages(text: text, fromWho: FromWho.mine);
-    message.add(newMessage);
-    print('Cantidad de mensajes: ${message.length}'); // Imprime la cantidad de mensajes
+  Future<void> sendMessage(String text) async { 
+    if (text.trim().isEmpty) return; // Evita enviar mensajes vacíos o solo espacios
 
-    if (text.endsWith('?')){ 
-       seojunReply();
-     }
+    final newMessage = Messages(text: text, fromWho: FromWho.hime, time: DateFormat('hh:mm a').format(DateTime.now()));
+    messages.add(newMessage);
+    print('Cantidad de mensajes: ${messages.length}'); // Imprime la cantidad de mensajes
+
+    if (text.endsWith('?')) { 
+      await amloReply();
+    }
     notifyListeners();
     moveScrollToBottom();
-
-   }
-
-
-  Future<void> seojunReply() async { 
-    final seojunMessage = await getYesNoanswer.getAnswer();
-    message.add(seojunMessage);
-    notifyListeners();
-    moveScrollToBottom();
-
-   }
-   
-
-  void moveScrollToBottom(){ 
-
-    chatScrollcontroler.animateTo(
-      //extender el scroll lo maximo que se mueva
-    chatScrollcontroler.position.maxScrollExtent,
-    duration: const Duration(seconds: 1), 
-    curve: Curves.easeOut);
-
   }
 
+  Future<void> amloReply() async { 
+    final SeojunMessage = await getYesNoanswer.getAnswer();
+    messages.add(SeojunMessage);
+    print('Cantidad de mensajes: ${messages.length}'); // Imprime la cantidad de mensajes
+    notifyListeners();
+    moveScrollToBottom();
+  }
 
+  void moveScrollToBottom() { 
+    chatScrollController.animateTo(
+      chatScrollController.position.maxScrollExtent,
+      duration: const Duration(seconds: 1), 
+      curve: Curves.easeOut,
+    );
+  }
 }

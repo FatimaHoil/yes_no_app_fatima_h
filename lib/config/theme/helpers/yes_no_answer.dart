@@ -8,10 +8,12 @@ class GetYesNoanswer {
   Future<Messages> getAnswer() async { 
 
     final response = await _dio.get('https://yesno.wtf/api');
+    // Almacena las peticiones de Get en una variable 
 
     final yesnomodel = YesNoModel.fromJsonMap(response.data);
+    // devolver la instancia de "message" creada en el modelo 
 
-    return yesnomodel.toMessageEntitie();
+    return yesnomodel.toMessageEntity();
 
    }
  }

@@ -21,14 +21,15 @@ class SeojunMessage extends StatelessWidget {
           ),
           child:  Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: Text(message.text, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
+            child: Text(message.text, 
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
           ),
         ),
 
         const SizedBox(height: 15),
 
         //imagen 
-         _iamgebuble(message.imageUrl!),
+         _imagebuble(message.imageUrl!),
          const SizedBox(height: 15),
         
 
@@ -37,11 +38,11 @@ class SeojunMessage extends StatelessWidget {
   }
 }
 
-class _iamgebuble extends StatelessWidget {
+class _imagebuble extends StatelessWidget {
 
   final String imageUrl;
 
-  const _iamgebuble( this.imageUrl );
+  const _imagebuble( this.imageUrl );
 
   @override
   Widget build(BuildContext context) {
